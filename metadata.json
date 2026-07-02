@@ -1,6 +1,0 @@
-{
-  "name": "Solicitudes de Compra",
-  "description": "Sistema ejecutivo para la gestión de solicitudes de compra, importación de catálogos masivos (CSV), edición de fotos optimizadas de artículos y generación de reportes PDF profesionales.",
-  "requestFramePermissions": ["camera"],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
