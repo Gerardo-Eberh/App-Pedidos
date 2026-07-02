@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "App user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "username": { "type": "string" },
+        "fullName": { "type": "string" },
+        "sector": { "type": "string" },
+        "password": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "username", "fullName", "sector", "password", "createdAt"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Catalog product",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "description": { "type": "string" },
+        "unit": { "type": "string" },
+        "category": { "type": "string" }
+      },
+      "required": ["code", "description", "unit"]
+    },
+    "ProductPhoto": {
+      "title": "ProductPhoto",
+      "description": "Catalog photo association",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "base64Image": { "type": "string" }
+      },
+      "required": ["code", "base64Image"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "User order request",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "requestedBy": { "type": "string" },
+        "createdById": { "type": "string" },
+        "sector": { "type": "string" },
+        "title": { "type": "string" },
+        "items": { "type": "array" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "requestedBy", "createdById", "sector", "title", "items", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Users collection"
+    },
+    "products": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Products collection"
+    },
+    "product_photos": {
+      "schema": { "$ref": "#/entities/ProductPhoto" },
+      "description": "Product photos collection"
+    },
+    "orders": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Orders collection"
+    }
+  }
+}
