@@ -44,6 +44,7 @@ export default function App() {
   
   // Auth & Multi-user state
   const [users, setUsers] = useState<UserType[]>([]);
+  const [isUsersLoading, setIsUsersLoading] = useState<boolean>(true);
   const [loggedInUser, setLoggedInUser] = useState<UserType | null>(null);
   
   // Login / Register Form states
@@ -117,10 +118,12 @@ export default function App() {
         });
         setUsers(updatedUsers);
       }
+      setIsUsersLoading(false);
     }, (error) => {
       console.error("Firestore Users subscription error:", error);
       setUsers([]);
       setAuthError("Error al cargar usuarios. Intente recargar.");
+      setIsUsersLoading(false);
     });
     return () => unsubscribe();
   }, []);
@@ -262,7 +265,10 @@ export default function App() {
     e.preventDefault();
     setAuthError(null);
 
-    // Removed blocking check for loading users
+    if (isUsersLoading) {
+      setAuthError('El sistema está cargando los usuarios. Por favor, espere un momento.');
+      return;
+    }
     
     const normUser = loginUsername.trim().toLowerCase();
     const foundUser = users.find(u => u.username.toLowerCase() === normUser);
@@ -329,10 +335,10 @@ export default function App() {
   const sectorOrders = orders.filter(o => o.sector === loggedInUser?.sector);
 
   return (
-    <div className="flex min-h-screen bg-slate-950 font-sans items-center justify-center p-0 md:p-6 text-slate-100 select-none">
+    <div className="flex min-h-[100dvh] bg-slate-950 font-sans items-center justify-center p-0 md:p-6 text-slate-100 select-none">
       
       {/* APP WORKSPACE CONTAINER */}
-      <div className="w-full max-w-md h-screen md:h-[840px] bg-slate-950 border-0 md:border md:border-slate-800/80 rounded-none md:rounded-3xl shadow-2xl flex flex-col overflow-hidden relative" id="mobile-app-frame">
+      <div className="w-full max-w-md h-[100dvh] md:h-[840px] bg-slate-950 border-0 md:border md:border-slate-800/80 rounded-none md:rounded-3xl shadow-2xl flex flex-col overflow-hidden relative" id="mobile-app-frame">
         
         {/* APP CONTENT AREA */}
         <div className="flex-1 overflow-y-auto flex flex-col relative pb-20">
