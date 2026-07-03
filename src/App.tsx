@@ -335,10 +335,10 @@ export default function App() {
   const sectorOrders = orders.filter(o => o.sector === loggedInUser?.sector);
 
   return (
-    <div className="flex min-h-[100dvh] bg-slate-950 font-sans items-center justify-center p-0 md:p-6 text-slate-100 select-none">
+    <div className="flex h-[100dvh] w-full bg-slate-950 font-sans items-center justify-center p-0 md:p-6 text-slate-100 select-none overflow-hidden fixed inset-0">
       
       {/* APP WORKSPACE CONTAINER */}
-      <div className="w-full max-w-md h-[100dvh] md:h-[840px] bg-slate-950 border-0 md:border md:border-slate-800/80 rounded-none md:rounded-3xl shadow-2xl flex flex-col overflow-hidden relative" id="mobile-app-frame">
+      <div className="w-full h-full max-w-md md:h-[840px] md:max-h-full bg-slate-950 border-0 md:border md:border-slate-800/80 rounded-none md:rounded-3xl shadow-2xl flex flex-col overflow-hidden relative" id="mobile-app-frame">
         
         {/* APP CONTENT AREA */}
         <div className="flex-1 overflow-y-auto flex flex-col relative pb-20">
@@ -395,13 +395,21 @@ export default function App() {
 
                     <button
                       type="submit"
-                      className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl tracking-wide uppercase transition-colors cursor-pointer mt-2 flex items-center justify-center gap-1.5"
+                      disabled={isUsersLoading}
+                      className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl tracking-wide uppercase transition-colors cursor-pointer mt-2 flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Ingresar al Sistema
+                      {isUsersLoading ? (
+                        <>
+                          <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                          Cargando...
+                        </>
+                      ) : (
+                        'Ingresar al Sistema'
+                      )}
                     </button>
                   </div>
 
-                  {authError && (
+                  {authError && !isUsersLoading && (
                     <div className="p-3 bg-red-950/40 text-red-300 border border-red-900/40 rounded-xl text-[11px] flex items-center gap-2">
                       <AlertCircle size={14} className="shrink-0 text-red-400" />
                       <span>{authError}</span>
